@@ -13,7 +13,7 @@ public class Newsfeed {
         mUrl = url;
     }
 
-    public String getTitle(){
+    public String getNewsfeedTitle(){
         return mTitle;
     }
 
