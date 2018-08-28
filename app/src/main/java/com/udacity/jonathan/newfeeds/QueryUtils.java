@@ -43,7 +43,7 @@ public class QueryUtils {
             Log.e(LOG_TAG, "Problem making the HTTP request.", e);
         }
 
-        // Extract relevant fields from the JSON response and create a list of {@link Earthquake}s
+        // Extract relevant fields from the JSON response and create a list of {@link Newsfeed}s
         List<Newsfeed> newsfeeds = extractFeatureFromJson(jsonResponse);
 
         // Return the list of newsfeeds
@@ -135,7 +135,7 @@ public class QueryUtils {
             return null;
         }
 
-        // Create an empty ArrayList that we can start adding earthquakes to
+        // Create an empty ArrayList that we can start adding Newsfeeds to
         List<Newsfeed> newsfeeds = new ArrayList<>();
 
         // Try to parse the JSON response string. If there's a problem with the way the JSON
@@ -147,18 +147,18 @@ public class QueryUtils {
             JSONObject baseJsonResponse = new JSONObject(newsfeedJSON);
 
             // Extract the JSONArray associated with the key called "features",
-            // which represents a list of features (or earthquakes).
+            // which represents a list of features (or Newsfeeds).
             JSONArray newsfeedArray = baseJsonResponse.getJSONArray("results");
 
-            // For each earthquake in the earthquakeArray, create an {@link Earthquake} object
+            // For each Newsfeed in the NewsfeedArray, create an {@link Newsfeed} object
             for (int i = 0; i < newsfeedArray.length(); i++) {
 
-                // Get a single earthquake at position i within the list of earthquakes
+                // Get a single Newsfeed at position i within the list of Newsfeeds
                 JSONObject currentNewsfeed = newsfeedArray.getJSONObject(i);
 
-                // For a given earthquake, extract the JSONObject associated with the
+                // For a given Newsfeed, extract the JSONObject associated with the
                 // key called "properties", which represents a list of all properties
-                // for that earthquake.
+                // for that Newsfeed.
                 JSONObject properties = currentNewsfeed.getJSONObject("properties");
 
                 // Extract the value for the key called "place"
@@ -167,11 +167,11 @@ public class QueryUtils {
                 // Extract the value for the key called "url"
                 String url = properties.getString("url");
 
-                // Create a new {@link Earthquake} object with the magnitude, location, time,
+                // Create a new {@link Newsfeed} object with the magnitude, location, time,
                 // and url from the JSON response.
                 Newsfeed newsfeed = new Newsfeed(title, url);
 
-                // Add the new {@link Earthquake} to the list of earthquakes.
+                // Add the new {@link Newsfeed} to the list of Newsfeeds.
                 newsfeeds.add(newsfeed);
             }
 
@@ -179,10 +179,10 @@ public class QueryUtils {
             // If an error is thrown when executing any of the above statements in the "try" block,
             // catch the exception here, so the app doesn't crash. Print a log message
             // with the message from the exception.
-            Log.e("QueryUtils", "Problem parsing the earthquake JSON results", e);
+            Log.e("QueryUtils", "Problem parsing the Newsfeed JSON results", e);
         }
 
-        // Return the list of earthquakes
+        // Return the list of Newsfeeds
         return newsfeeds;
     }
 
