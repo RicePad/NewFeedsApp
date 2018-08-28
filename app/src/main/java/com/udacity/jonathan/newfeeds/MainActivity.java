@@ -21,17 +21,17 @@ public class MainActivity extends AppCompatActivity implements LoaderCallbacks<L
 
     private static final String LOG_TAG = MainActivity.class.getName();
 
-    /** URL for earthquake data from the Guardian dataset */
+    /** URL for guardianAPI data from the Guardian dataset */
     private static final String GUARDIAN_REQUEST_URL =
             "https://content.guardianapis.com/football?api-key=5406cfd9-9ac5-4e7e-8e7c-38a5c1537b86";
 
     /**
-     * Constant value for the earthquake loader ID. We can choose any integer.
+     * Constant value for the newsfeed loader ID. We can choose any integer.
      * This really only comes into play if you're using multiple loaders.
      */
     private static final int NEWSFEED_LOADER_ID = 1;
 
-    /** Adapter for the list of earthquakes */
+    /** Adapter for the list of newsfeed */
     private NewsfeedAdapter mAdapter;
 
 //    /** TextView that is displayed when the list is empty */
@@ -48,7 +48,7 @@ public class MainActivity extends AppCompatActivity implements LoaderCallbacks<L
         mEmptyStateTextView = (TextView) findViewById(R.id.empty_view);
         newsfeedListView.setEmptyView(mEmptyStateTextView);
 
-        // Create a new adapter that takes an empty list of earthquakes as input
+        // Create a new adapter that takes an empty list of newsfeed as input
         mAdapter = new NewsfeedAdapter(this, new ArrayList<Newsfeed>());
 
         // Set the adapter on the {@link ListView}
@@ -56,17 +56,17 @@ public class MainActivity extends AppCompatActivity implements LoaderCallbacks<L
         newsfeedListView.setAdapter(mAdapter);
 
         // Set an item click listener on the ListView, which sends an intent to a web browser
-        // to open a website with more information about the selected earthquake.
+        // to open a website with more information about the selected newsfeed.
         newsfeedListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-                // Find the current earthquake that was clicked on
+                // Find the current newsfeed that was clicked on
                 Newsfeed currentNewsfeed = mAdapter.getItem(position);
 
                 // Convert the String URL into a URI object (to pass into the Intent constructor)
                 Uri newsfeedUri = Uri.parse(currentNewsfeed.getUrl());
 
-                // Create a new intent to view the earthquake URI
+                // Create a new intent to view the newsfeed URI
                 Intent websiteIntent = new Intent(Intent.ACTION_VIEW, newsfeedUri);
 
                 // Send the intent to launch a new activity
@@ -113,13 +113,13 @@ public class MainActivity extends AppCompatActivity implements LoaderCallbacks<L
         View loadingIndicator = findViewById(R.id.loading_indicator);
         loadingIndicator.setVisibility(View.GONE);
 
-        // Set empty state text to display "No earthquakes found."
-        mEmptyStateTextView.setText("No Articles");
+        // Set empty state text to display "No newsfeed found."
+        mEmptyStateTextView.setText("No Newsfeeds");
 
-        // Clear the adapter of previous earthquake data
+        // Clear the adapter of previous Newsfeed data
         mAdapter.clear();
 
-        // If there is a valid list of {@link Earthquake}s, then add them to the adapter's
+        // If there is a valid list of {@link Newsfeeds}s, then add them to the adapter's
         // data set. This will trigger the ListView to update.
         if (newsfeeds != null && !newsfeeds.isEmpty()) {
             mAdapter.addAll(newsfeeds);
