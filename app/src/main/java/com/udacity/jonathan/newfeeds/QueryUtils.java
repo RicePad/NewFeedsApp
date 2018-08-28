@@ -148,28 +148,19 @@ public class QueryUtils {
 
             // Extract the JSONArray associated with the key called "features",
             // which represents a list of features (or Newsfeeds).
-            JSONArray newsfeedArray = baseJsonResponse.getJSONArray("results");
+            JSONObject response = baseJsonResponse.optJSONObject("response");
+            JSONArray newsfeedArray = response.optJSONArray("results");
 
             // For each Newsfeed in the NewsfeedArray, create an {@link Newsfeed} object
             for (int i = 0; i < newsfeedArray.length(); i++) {
+                JSONObject currentArticle = newsfeedArray.optJSONObject(i);
+                String title = currentArticle.optString("webTitle");
+                String link = currentArticle.optString("webUrl");
 
-                // Get a single Newsfeed at position i within the list of Newsfeeds
-                JSONObject currentNewsfeed = newsfeedArray.getJSONObject(i);
-
-                // For a given Newsfeed, extract the JSONObject associated with the
-                // key called "properties", which represents a list of all properties
-                // for that Newsfeed.
-                JSONObject properties = currentNewsfeed.getJSONObject("properties");
-
-                // Extract the value for the key called "place"
-                String title = properties.getString("title");
-
-                // Extract the value for the key called "url"
-                String url = properties.getString("url");
 
                 // Create a new {@link Newsfeed} object with the magnitude, location, time,
                 // and url from the JSON response.
-                Newsfeed newsfeed = new Newsfeed(title, url);
+                Newsfeed newsfeed = new Newsfeed(title, link);
 
                 // Add the new {@link Newsfeed} to the list of Newsfeeds.
                 newsfeeds.add(newsfeed);
