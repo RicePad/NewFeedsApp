@@ -146,8 +146,8 @@ public class QueryUtils {
             // Create a JSONObject from the JSON response string
             JSONObject baseJsonResponse = new JSONObject(newsfeedJSON);
 
-            // Extract the JSONArray associated with the key called "features",
-            // which represents a list of features (or Newsfeeds).
+            // Extract the JSONArray associated with the key called "results",
+            // which represents a list of results (or Newsfeeds).
             JSONObject response = baseJsonResponse.optJSONObject("response");
             JSONArray newsfeedArray = response.optJSONArray("results");
 
@@ -158,7 +158,7 @@ public class QueryUtils {
                 String link = currentArticle.optString("webUrl");
 
 
-                // Create a new {@link Newsfeed} object with the magnitude, location, time,
+                // Create a new {@link Newsfeed} object title, link, date
                 // and url from the JSON response.
                 Newsfeed newsfeed = new Newsfeed(title, link);
 

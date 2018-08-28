@@ -8,9 +8,17 @@ public class Newsfeed {
     /** Website URL of the NewsFeed */
     private String mUrl;
 
-    public Newsfeed(String title, String url) {
+    /** Section to which the newsfeed belongs */
+    private String mSection;
+
+    /** Publication date of the newsfeed */
+    private long mDateTime;
+
+    public Newsfeed(String title, String url, String section, long dateTime) {
         mTitle = title;
         mUrl = url;
+        mSection = section;
+        mDateTime = dateTime;
     }
 
     public String getNewsfeedTitle(){
@@ -19,6 +27,14 @@ public class Newsfeed {
 
     public String getUrl(){
         return mUrl;
+    }
+
+    public String getSection(){
+        return mSection;
+    }
+
+    public long getDateTime(){
+        return mDateTime;
     }
 
 }
