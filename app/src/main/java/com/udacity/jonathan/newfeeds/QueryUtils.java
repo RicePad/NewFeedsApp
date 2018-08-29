@@ -3,6 +3,8 @@ package com.udacity.jonathan.newfeeds;
 import android.text.TextUtils;
 import android.util.Log;
 
+import org.joda.time.DateTime;
+import org.joda.time.Instant;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -153,14 +155,17 @@ public class QueryUtils {
 
             // For each Newsfeed in the NewsfeedArray, create an {@link Newsfeed} object
             for (int i = 0; i < newsfeedArray.length(); i++) {
-                JSONObject currentArticle = newsfeedArray.optJSONObject(i);
-                String title = currentArticle.optString("webTitle");
-                String link = currentArticle.optString("webUrl");
+                JSONObject currentNewsfeed = newsfeedArray.optJSONObject(i);
+                String title = currentNewsfeed.optString("webTitle");
+                String link = currentNewsfeed.optString("webUrl");
+                String section = currentNewsfeed.optString("sectionName");
+                long dateTime = new DateTime(currentNewsfeed.optString("webPublicationDate")).getMillis();
+
 
 
                 // Create a new {@link Newsfeed} object title, link, date
                 // and url from the JSON response.
-                Newsfeed newsfeed = new Newsfeed(title, link);
+                Newsfeed newsfeed = new Newsfeed(title, link, section, dateTime );
 
                 // Add the new {@link Newsfeed} to the list of Newsfeeds.
                 newsfeeds.add(newsfeed);
